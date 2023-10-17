@@ -7,41 +7,46 @@ int shell(void)
 	size_t n = 0;
 	int argc = 0, i = 0;
 	char **argv = NULL;
-    char *cmdpath = NULL;
+
 
     /* taking input */
 	printf("$ ");
+
+
 	if (getline(&cmd, &n, stdin) == -1)
+    {
+        free(cmd);
 		return (-1);
-    
+    }
+   
     cmd_dup = strdup(cmd);
 
     /* tokenizing input to count argc */ 
-	token = strtok(cmd, delim);
+    token = strtok(cmd, delim);
 
     /* counting argc */
-	while (token)
-	{
-		token = strtok(NULL, delim);
-		argc++;
-	}
+    while (token)
+    {
+        token = strtok(NULL, delim);
+        argc++;
+    }
 
     /* assigning memory of size argc to argv */
-	argv = malloc(sizeof(char *) * argc);
+    argv = malloc(sizeof(char *) * argc);
 
     /* tokenizing input to assign values to argv */ 
-	token = strtok(cmd_dup, delim);
+    token = strtok(cmd_dup, delim);
 
     /* assigning values to argv */
-	while (token)
-	{
-		argv[i] = token;
-		token = strtok(NULL, delim);
-		i++;
-	}
+    while (token)
+    {
+        argv[i] = token;
+        token = strtok(NULL, delim);
+        i++;
+    }
 
     /* ending argv array */ 
-	argv[i] = NULL;
+    argv[i] = NULL;
 
     /* executing command with arguments in environment */ 
     
@@ -55,8 +60,11 @@ int shell(void)
         printf("Makaynch: No such file or directory");
     }
 
+    
+
+
     /* freeing used resources */ 
-	free(cmd), free(argv); free(cmdpath);
+	free(cmd), free(argv);
 
     /* finish */ 
 	return (0);
