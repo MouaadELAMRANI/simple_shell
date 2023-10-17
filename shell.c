@@ -14,7 +14,7 @@ int shell(void)
 	if (getline(&cmd, &n, stdin) == -1)
 		return (-1);
 
-    // tokenizing input to count argc
+    /* tokenizing input to count argc */ 
 	token = strtok(cmd, delim);
 
     /* counting argc */
