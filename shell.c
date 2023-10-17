@@ -2,7 +2,7 @@
 
 int shell(void)
 {
-	char *cmd = NULL, *token = NULL;
+	char *cmd = NULL, *cmd_dup = NULL, *token = NULL;
 	char *delim = " \n";
 	size_t n = 0;
 	int argc = 0, i = 0;
@@ -13,6 +13,8 @@ int shell(void)
 	printf("$ ");
 	if (getline(&cmd, &n, stdin) == -1)
 		return (-1);
+    
+    cmd_dup = strdup(cmd);
 
     /* tokenizing input to count argc */ 
 	token = strtok(cmd, delim);
@@ -24,23 +26,18 @@ int shell(void)
 		argc++;
 	}
 
-    printf("NUMBER OF ARGUMENTS: %d\n", argc);
-
     /* assigning memory of size argc to argv */
-	argv = malloc(sizeof(char *) * argc - 1);
+	argv = malloc(sizeof(char *) * argc);
 
     /* tokenizing input to assign values to argv */ 
-	token = strtok(cmd, delim);
+	token = strtok(cmd_dup, delim);
 
     /* assigning values to argv */
 	while (token)
 	{
 		argv[i] = token;
 		token = strtok(NULL, delim);
-        printf("ARGUMENT INDEX IS: %d\n", i);
-        printf("ARGUMENT VALUE IS: %s\n", argv[i]);
 		i++;
-        printf("AFTER WHILE I = %d\n", i);
 	}
 
     /* ending argv array */ 
