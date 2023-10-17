@@ -44,7 +44,16 @@ int shell(void)
 	argv[i] = NULL;
 
     /* executing command with arguments in environment */ 
-    execve(argv[0], argv, __environ);
+    
+
+    if (access(argv[0], X_OK) == 0)
+    {
+        execve(argv[0], argv, __environ);
+    }
+    else
+    {
+        printf("Makaynch: No such file or directory");
+    }
 
     /* freeing used resources */ 
 	free(cmd), free(argv); free(cmdpath);
