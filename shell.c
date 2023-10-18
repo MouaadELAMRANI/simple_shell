@@ -1,5 +1,4 @@
 #include "shell.h"
-#include <errno.h>
 
 int shell(void)
 {
@@ -37,6 +36,7 @@ int handlecommand(char *cmd)
 {
 	char *cmd_dup = NULL, *token = NULL, *delim = " \n", **argv = NULL;
 	int argc = 0, i = 0;
+	extern char **environ;
 
 	cmd_dup = strdup(cmd);
 	token = strtok(cmd, delim);
@@ -58,9 +58,13 @@ int handlecommand(char *cmd)
 	{
 		exit(EXIT_SUCCESS);
 	}
+	else if (_strcmp("env", argv[0]) == 0)
+	{
+		printf("%s\n", *environ);
+	}
 	else if (access(argv[0], X_OK) == 0)
 	{
-		executecommand(argv);
+		executecommand(argv, environ);
 	}
 	else
 	{
@@ -71,10 +75,9 @@ int handlecommand(char *cmd)
 	return (0);
 }
 
-int executecommand(char **argv)
+int executecommand(char **argv, char **environ)
 {
 	int status;
-	extern char **environ;
 
 	if (fork() == 0)
 	{

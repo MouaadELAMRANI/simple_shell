@@ -9,7 +9,7 @@
 
 int shell(void);
 int handlecommand(char *cmd);
-int executecommand(char **argv);
+int executecommand(char **argv, char **environ);
 
 int _strlen(char *msg);
 char *_strdup(char *str);
