@@ -5,7 +5,7 @@ int shell(void)
 	char *cmd = NULL, *cmd_dup = NULL, *token = NULL;
 	char *delim = " \n";
 	size_t n = 0;
-	int argc = 0, i = 0;
+	int argc = 0, i = 0, status;
 	char **argv = NULL;
 
 
@@ -53,11 +53,19 @@ int shell(void)
 
     if (access(argv[0], X_OK) == 0)
     {
-        execve(argv[0], argv, __environ);
+	if (fork() == 0)
+	{
+	    execve(argv[0], argv, __environ);
+	    printf("$ ");
+	}
+	else
+	{
+		wait(&status);
+	}
     }
     else
     {
-        printf("Makaynch: No such file or directory");
+        printf("Makaynch: No such file or directory\n");
     }
 
     
