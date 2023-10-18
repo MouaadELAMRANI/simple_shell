@@ -8,6 +8,8 @@
 #include <sys/wait.h>
 
 int shell(void);
+int handlecommand(char *cmd);
+int executecommand(char **argv);
 
 int _strlen(char *msg);
 char *_strdup(char *str);
