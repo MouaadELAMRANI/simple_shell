@@ -7,17 +7,20 @@ int shell(void)
 	size_t n = 0;
 	int argc = 0, i = 0, status;
 	char **argv = NULL;
+    extern char **environ;
 
-
+    printf("environ= %s\n", *environ);
     /* taking input */
 	printf("$ ");
 
 
-	if (getline(&cmd, &n, stdin) == -1)
+	if (getline(&cmd, &n, stdin) < 1)
     {
         free(cmd);
-		return (-1);
+		return(-1);
     }
+
+    printf("cmd: %s\n", cmd);
    
     cmd_dup = strdup(cmd);
 
@@ -49,23 +52,25 @@ int shell(void)
     argv[i] = NULL;
 
     /* executing command with arguments in environment */ 
-    
-
-    if (access(argv[0], X_OK) == 0)
+    if (_strcmp(argv[0], "exit") == 0)
     {
-	if (fork() == 0)
-	{
-	    execve(argv[0], argv, __environ);
-	    printf("$ ");
-	}
-	else
-	{
-		wait(&status);
-	}
+        exit(0);
+    }
+    else if (access(argv[0], X_OK) == 0)
+    {
+        if (fork() == 0)
+        {
+            execve(argv[0], argv, environ);
+            printf("$ ");
+        }
+        else
+        {
+            wait(&status);
+        }
     }
     else
     {
-        printf("Makaynch: No such file or directory\n");
+        printf("No such file or directory\n");
     }
 
     
@@ -76,4 +81,4 @@ int shell(void)
 
     /* finish */ 
 	return (0);
-}
+}}
