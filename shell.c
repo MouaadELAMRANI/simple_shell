@@ -11,16 +11,15 @@ int shell(void)
 
 	if (getline(&cmd, &n, stdin) < 1)
 	{
-		if (feof(stdin))
+		free(cmd);
+		/*if (feof(stdin))
 		{
-			free(cmd);
 			exit(EXIT_SUCCESS);
 		}
 		else
-		{
-			free(cmd);
+		{*/
 			exit(EXIT_FAILURE);
-		}
+		/*}*/
 	}
 	else if (_strlen(cmd) > 1)
 	{
@@ -38,7 +37,7 @@ int handlecommand(char *cmd)
 	int argc = 0, i = 0;
 	extern char **environ;
 
-	cmd_dup = strdup(cmd);
+	cmd_dup = _strdup(cmd);
 	token = strtok(cmd, delim);
 	while (token)
 	{
