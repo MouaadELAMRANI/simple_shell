@@ -54,7 +54,7 @@ int handlecommand(char *cmd)
 		i++;
 	}
 	argv[i] = NULL;
-	if (_strcmp(argv[0], "exit") == 0)
+	if (_strcmp("exit", argv[0]) == 0)
 	{
 		exit(EXIT_SUCCESS);
 	}
