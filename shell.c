@@ -71,7 +71,7 @@ int handlecommand(char *cmd)
 	return (0);
 }
 
-int executecommand(char **argv) 
+int executecommand(char **argv)
 {
 	int status;
 	extern char **environ;
