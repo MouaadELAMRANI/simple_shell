@@ -59,7 +59,7 @@ int handlecommand(char *cmd)
 	}
 	else if (_strcmp("env", argv[0]) == 0)
 	{
-		printf("%s\n", *environ);
+		printenv(environ);
 	}
 	else if (access(argv[0], X_OK) == 0)
 	{
@@ -89,4 +89,12 @@ int executecommand(char **argv, char **environ)
 	}
 
 	return (0);
+}
+
+void printenv(char **environ)
+{
+	for (; *environ; environ++) 
+	{
+		printf("%s\n", *environ);
+	}
 }

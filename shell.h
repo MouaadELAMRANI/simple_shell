@@ -10,6 +10,7 @@
 int shell(void);
 int handlecommand(char *cmd);
 int executecommand(char **argv, char **environ);
+void printenv(char **environ);
 
 int _strlen(char *msg);
 char *_strdup(char *str);
