@@ -2,8 +2,8 @@
 
 int main(void)
 {
-    while(1)
-    {
-	    shell();
-    }
+	while (1)
+	{
+		shell();
+	}
 }
