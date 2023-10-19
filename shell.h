@@ -8,10 +8,10 @@
 #include <sys/wait.h>
 
 int shell(void);
-int handlecommand(char *cmd);
+void handlecommand(char *cmd);
 int executecommand(char **argv, char **environ);
 void printenv(char **environ);
-char *getcommand(char **argv, char **environ);
+char *getcommand(char **argv);
 
 int _strlen(char *msg);
 char *_strdup(char *str);

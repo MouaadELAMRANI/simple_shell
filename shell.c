@@ -10,8 +10,12 @@ int shell(void)
 	char *cmd = NULL;
 	size_t n = 0;
 
+	if (isatty(STDIN_FILENO))
+	{
+		printf("$ ");
+	}
+
 	/*printf("SHELL START\n");*/
-	printf("$ ");
 	if (getline(&cmd, &n, stdin) < 1)
 	{
 		free(cmd);
@@ -25,7 +29,12 @@ int shell(void)
 		}
 	}
 	else
-		return (handlecommand(cmd));
+	{
+		handlecommand(cmd);
+	}
+		
+	
+	return (0);
 }
 
 /**
@@ -33,11 +42,10 @@ int shell(void)
  * @cmd: char
  * Return: return to 0
  */
-int handlecommand(char *cmd)
+void handlecommand(char *cmd)
 {
 	char *cmd_dup = NULL, *token = NULL, *delim = " \n", **argv = NULL;
 	int argc = 0, i = 0;
-	extern char **environ;
 
 	/*printf("handlecommand START\n");*/
 	cmd_dup = _strdup(cmd);
@@ -58,15 +66,12 @@ int handlecommand(char *cmd)
 			i++;
 		}
 		argv[i] = NULL;
-		if (executecommand(argv, environ) != 0)
+		if (executecommand(argv, __environ) != 0)
 		{
 			printf("No such file or directory\n");
-			return (-1);
 		}
 		free(cmd), free(argv);
 	}
-
-	return (0);
 }
 
 /**
@@ -80,7 +85,6 @@ int executecommand(char **argv, char **environ)
 	int status;
 	char *command;
 
-	/*printf("executecommand START\n");*/
 	if (_strcmp("exit", argv[0]) == 0)
 	{
 		exit(EXIT_SUCCESS);
@@ -91,29 +95,25 @@ int executecommand(char **argv, char **environ)
 		printenv(environ);
 		return (0);
 	}
-	/*
-	 * else if (access(argv[0], X_OK) == 0)
-	 * command = argv[0];
-	 * command = _strcat("/bin/", argv[0]);
-	 * else
-	 * return (1);
-	 */
 	else
 	{
-		command = getcommand(argv, environ);
+		command = getcommand(argv);
 		if (command != NULL)
 		{
 			if (fork() == 0)
 			{
-				execve(command, argv, environ);
+				execve(command, argv, __environ);
 			}
 			else
 				wait(&status);
+			
+			return (0);
+		}
+		else
+		{
+			return (-1);
 		}
 	}
-
-	/*printf("done");*/
-	return (0);
 }
 
 /**
@@ -122,9 +122,9 @@ int executecommand(char **argv, char **environ)
  * @environ: env
  * Return: return to NULL
  */
-char *getcommand(char **argv, char **environ)
+char *getcommand(char **argv)
 {
-	char *path = _getpath(environ), *token, *delim = ":";
+	/*char *token, *delim = ":"; path = _getpath(environ),*/
 
 	/*printf("getcommand START\n");*/
 	/*printf("PATH is: %s\n", path);*/
@@ -143,18 +143,18 @@ char *getcommand(char **argv, char **environ)
 			return (_strcat("/bin/", argv[0]));
 		}
 
-		token = strtok(path, delim);
-		while (token)
-		{
-			token = strtok(NULL, delim);
+		/*token = strtok("/bin/", delim);*/
+		/*while (token)*/
+		/*{*/
+		/*	token = strtok(NULL, delim);*/
 			/*printf("currently searching in: %s\n", token);*/
 			/*printf("TOKEN = %s\n", _strcat(_strcat(token, "/"), argv[0]));*/
-			if (access(_strcat(_strcat(token, "/"), argv[0]), X_OK) == 0)
-			{
+			/*if (access(_strcat(_strcat(token, "/"), argv[0]), X_OK) == 0)*/
+			/*{*/
 				/*printf("OK %s\n", _strcat(_strcat(token, "/"), argv[0]));*/
-				return (_strcat(_strcat(token, "/"), argv[0]));
-			}
-		}
+				/*return (_strcat(_strcat(token, "/"), argv[0]));*/
+			/*}*/
+		/*}*/
 	}
 
 	return (NULL);
