@@ -68,7 +68,7 @@ void handlecommand(char *cmd)
 		argv[i] = NULL;
 		if (executecommand(argv, __environ) != 0)
 		{
-			printf("No such file or directory\n");
+			fprintf(stderr, "No such file or directory\n");
 		}
 		free(cmd), free(argv);
 	}
@@ -143,7 +143,7 @@ char *getcommand(char **argv)
 			return (_strcat("/bin/", argv[0]));
 		}
 
-		/*token = strtok("/bin/", delim);*/
+		/*token = strtok(path, delim);*/
 		/*while (token)*/
 		/*{*/
 		/*	token = strtok(NULL, delim);*/
