@@ -67,20 +67,74 @@ int _strcmp(char *s1, char *s2)
 	return (0);
 }
 
+int _strcnt(char *target, char *search)
+{
+	int i;
+
+	for (i = 0; search[i] != '\0'; i++)
+	{
+		if (target[i] != search[i])
+			return (1);
+	}
+
+	return (0);
+}
+
 /**
  * _strcat - todo
  * @dest: todo
  * @src: todo
  * Return: todo
  */
-char *_strcat(char *dest, char *src)
+char *_strcat(char *left, char *right)
 {
-	char *concat = dest;
+	int l, r;
+	char *concat;
 
-	while (*dest)
-		dest++;
-	while (*src)
-		*dest++ = *src++;
-	*dest = *src;
+	for (l = 0; left[l] != '\0'; l++);
+	for (r = 0; right[r] != '\0'; r++);
+
+	concat = malloc((l + r) * sizeof(char));
+
+	for (l = 0; left[l] != '\0'; l++)
+	{
+		concat[l] = left[l];
+	}
+	for (r = 0; right[r] != '\0'; r++)
+	{
+		concat[l + r] = right[r];
+	}
+
 	return (concat);
+}
+
+
+void printenv(char **environ)
+{
+	for (; *environ; environ++) 
+	{
+		printf("%s\n", *environ);
+	}
+}
+
+/**
+ 
+_getpath - todo
+@environ: todo
+Return: todo
+*/
+char *_getpath(char **environ)
+{
+	char *pathname = "PATH=";
+
+	for (; *environ; environ++) 
+	{
+		if (_strcnt(*environ, pathname) == 0)
+		{
+			printf("PATH = %s\n", *environ);
+			return (*environ);
+		}
+	}
+
+	return NULL;
 }
