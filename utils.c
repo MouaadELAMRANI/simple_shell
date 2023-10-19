@@ -1,22 +1,6 @@
 #include "shell.h"
 
 /**
- * _strlen - todo
- * @msg: too
- * Return: todo
- **/
-int _strlen(char *msg)
-{
-	int i;
-
-	for (i = 0; msg[i] != '\0'; i++)
-		;
-
-	return (i);
-}
-
-
-/**
  * _strdup - Function returns a pointer to a newly location in memory
  * @str: string
  * Return: return to dest
@@ -84,6 +68,26 @@ int _strcnt(char *target, char *search)
 	}
 
 	return (0);
+}
+
+/**
+ * _getpath - todo
+ * @environ: todo
+ * Return: todo
+ */
+char *_getpath(char **environ)
+{
+	char *pathname = "PATH=";
+
+	for (; *environ; environ++)
+	{
+		if (_strcnt(*environ, pathname) == 0)
+		{
+			/*printf("PATH = %s\n", *environ);*/
+			return (*environ);
+		}
+	}
+	return (NULL);
 }
 
 /**

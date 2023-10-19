@@ -12,23 +12,17 @@ void printenv(char **environ)
 		printf("%s\n", *environ);
 	}
 }
-
 /**
- * _getpath - todo
- * @environ: todo
+ * _strlen - todo
+ * @msg: too
  * Return: todo
- */
-char *_getpath(char **environ)
+ **/
+int _strlen(char *msg)
 {
-	char *pathname = "PATH=";
+	int i;
 
-	for (; *environ; environ++)
-	{
-		if (_strcnt(*environ, pathname) == 0)
-		{
-			/*printf("PATH = %s\n", *environ);*/
-			return (*environ);
-		}
-	}
-	return (NULL);
+	for (i = 0; msg[i] != '\0'; i++)
+		;
+
+	return (i);
 }
