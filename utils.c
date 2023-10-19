@@ -17,9 +17,9 @@ int _strlen(char *msg)
 
 
 /**
- * _strdup - todo
- * @str: todo
- * Return: todo
+ * _strdup - Function returns a pointer to a newly location in memory
+ * @str: string
+ * Return: return to dest
  **/
 char *_strdup(char *str)
 {
@@ -43,10 +43,10 @@ char *_strdup(char *str)
 }
 
 /**
- * _strcmp - todo
- * @s1: todo
- * @s2: todo
- * Return: todo
+ * _strcmp - compares two string
+ * @s1: str1
+ * @s2: str2
+ * Return: return to 0
  */
 int _strcmp(char *s1, char *s2)
 {
@@ -66,6 +66,12 @@ int _strcmp(char *s1, char *s2)
 
 	return (0);
 }
+/**
+ * _strcnt - Entry point
+ * @target: destination pointer
+ * @search: source pointer
+ * Return: return to 0
+ */
 
 int _strcnt(char *target, char *search)
 {
@@ -81,18 +87,18 @@ int _strcnt(char *target, char *search)
 }
 
 /**
- * _strcat - todo
- * @dest: todo
- * @src: todo
- * Return: todo
+ * _strcat - Entry point
+ * @left: destination pointer
+ * @right: source pointer
+ * Return: return to string
  */
 char *_strcat(char *left, char *right)
 {
 	int l, r;
 	char *concat;
 
-	for (l = 0; left[l] != '\0'; l++);
-	for (r = 0; right[r] != '\0'; r++);
+	for (l = 0; left[l] != '\0'; l++)
+	for (r = 0; right[r] != '\0'; r++)
 
 	concat = malloc((l + r) * sizeof(char));
 
@@ -106,35 +112,4 @@ char *_strcat(char *left, char *right)
 	}
 
 	return (concat);
-}
-
-
-void printenv(char **environ)
-{
-	for (; *environ; environ++) 
-	{
-		printf("%s\n", *environ);
-	}
-}
-
-/**
- 
-_getpath - todo
-@environ: todo
-Return: todo
-*/
-char *_getpath(char **environ)
-{
-	char *pathname = "PATH=";
-
-	for (; *environ; environ++) 
-	{
-		if (_strcnt(*environ, pathname) == 0)
-		{
-			/*printf("PATH = %s\n", *environ);*/
-			return (*environ);
-		}
-	}
-
-	return NULL;
 }
