@@ -131,7 +131,7 @@ char *_getpath(char **environ)
 	{
 		if (_strcnt(*environ, pathname) == 0)
 		{
-			printf("PATH = %s\n", *environ);
+			/*printf("PATH = %s\n", *environ);*/
 			return (*environ);
 		}
 	}

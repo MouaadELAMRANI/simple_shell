@@ -5,7 +5,7 @@ int shell(void)
 	char *cmd = NULL;
 	size_t n = 0;
 
-	printf("SHELL START\n");
+	/*printf("SHELL START\n");*/
 	printf("$ ");
 	if (getline(&cmd, &n, stdin) < 1)
 	{
@@ -29,7 +29,7 @@ int handlecommand(char *cmd)
 	int argc = 0, i = 0;
 	extern char **environ;
 
-	printf("handlecommand START\n");
+	/*printf("handlecommand START\n");*/
 	cmd_dup = _strdup(cmd);
 	token = strtok(cmd, delim);
 	while (token)
@@ -64,7 +64,7 @@ int executecommand(char **argv, char **environ)
 	int status;
 	char *command;
 
-	printf("executecommand START\n");
+	/*printf("executecommand START\n");*/
 	if (_strcmp("exit", argv[0]) == 0)
 	{
 		exit(EXIT_SUCCESS);
@@ -95,7 +95,7 @@ int executecommand(char **argv, char **environ)
 		}
 	}
 
-	printf("done");
+	/*printf("done");*/
 	return (0);
 }
 
@@ -103,26 +103,32 @@ char *getcommand(char **argv, char **environ)
 {
 	char *path = _getpath(environ), *token, *delim = ":";
 
-	printf("getcommand START\n");
-	printf("PATH is: %s\n", path);
-	printf("got path\n");
+	/*printf("getcommand START\n");*/
+	/*printf("PATH is: %s\n", path);*/
+	/*printf("got path\n");*/
 	if (access(argv[0], X_OK) == 0)
 	{
-		printf("found outside path\n");
+		/*printf("found outside path\n");*/
 		return (argv[0]);
 	}
 	else
 	{
-		printf("searching for command in path\n");
+		/*printf("searching for command in path\n");*/
+		if (access(_strcat("/bin/", argv[0]), X_OK) == 0)
+		{
+			/*printf("OK %s\n", _strcat("/bin/", argv[0]));*/
+			return _strcat("/bin/", argv[0]);
+		}
+
 		token = strtok(path, delim);
 		while (token)
 		{
 			token = strtok(NULL, delim);
-			printf("currently searching in: %s\n", token);
-			printf("TOKEN = %s\n", _strcat(_strcat(token, "/"), argv[0]));
+			/*printf("currently searching in: %s\n", token);*/
+			/*printf("TOKEN = %s\n", _strcat(_strcat(token, "/"), argv[0]));*/
 			if (access(_strcat(_strcat(token, "/"), argv[0]), X_OK) == 0)
 			{
-				printf("OK %s\n", _strcat(_strcat(token, "/"), argv[0]));
+				/*printf("OK %s\n", _strcat(_strcat(token, "/"), argv[0]));*/
 				return _strcat(_strcat(token, "/"), argv[0]);
 			}
 		}
