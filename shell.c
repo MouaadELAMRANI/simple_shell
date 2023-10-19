@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+ * shell - basic shell
+ * Return: void
+ */
+
 int shell(void)
 {
 	char *cmd = NULL;
@@ -23,6 +28,11 @@ int shell(void)
 		return (handlecommand(cmd));
 }
 
+/**
+ * handlecommand - to handle cmd
+ * @cmd: char
+ * Return: return to 0
+ */
 int handlecommand(char *cmd)
 {
 	char *cmd_dup = NULL, *token = NULL, *delim = " \n", **argv = NULL;
@@ -59,6 +69,12 @@ int handlecommand(char *cmd)
 	return (0);
 }
 
+/**
+ * executecommand - cmd excution
+ * @argv: argument value
+ * @environ: env
+ * Return: return to 0
+ */
 int executecommand(char **argv, char **environ)
 {
 	int status;
@@ -75,12 +91,13 @@ int executecommand(char **argv, char **environ)
 		printenv(environ);
 		return (0);
 	}
-	/*else if (access(argv[0], X_OK) == 0)
-		command = argv[0];
-	else if (access(_strcat(_getpath(environ), argv[0]), X_OK) == 0) 
-		command = _strcat("/bin/", argv[0]);
-	else
-		return (1);*/
+	/*
+	 * else if (access(argv[0], X_OK) == 0)
+	 * command = argv[0];
+	 * command = _strcat("/bin/", argv[0]);
+	 * else
+	 * return (1);
+	 */
 	else
 	{
 		command = getcommand(argv, environ);
@@ -99,6 +116,12 @@ int executecommand(char **argv, char **environ)
 	return (0);
 }
 
+/**
+ * getcommand - ?
+ * @argv: argument value
+ * @environ: env
+ * Return: return to NULL
+ */
 char *getcommand(char **argv, char **environ)
 {
 	char *path = _getpath(environ), *token, *delim = ":";
@@ -117,7 +140,7 @@ char *getcommand(char **argv, char **environ)
 		if (access(_strcat("/bin/", argv[0]), X_OK) == 0)
 		{
 			/*printf("OK %s\n", _strcat("/bin/", argv[0]));*/
-			return _strcat("/bin/", argv[0]);
+			return (_strcat("/bin/", argv[0]));
 		}
 
 		token = strtok(path, delim);
@@ -129,7 +152,7 @@ char *getcommand(char **argv, char **environ)
 			if (access(_strcat(_strcat(token, "/"), argv[0]), X_OK) == 0)
 			{
 				/*printf("OK %s\n", _strcat(_strcat(token, "/"), argv[0]));*/
-				return _strcat(_strcat(token, "/"), argv[0]);
+				return (_strcat(_strcat(token, "/"), argv[0]));
 			}
 		}
 	}
