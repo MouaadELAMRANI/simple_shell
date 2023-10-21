@@ -37,7 +37,6 @@ int handlecommand(char *cmd)
 {
 	char *cmd_dup = NULL, *token = NULL, *delim = " \n", **argv = NULL;
 	int argc = 0, i = 0;
-	extern char **environ;
 
 	/*printf("handlecommand START\n");*/
 	cmd_dup = _strdup(cmd);
